@@ -27,6 +27,19 @@ public class Laser : MonoBehaviour
         {
             GameObject.Destroy(this.gameObject);
         }
+    }
 
+    void OnTriggerEnter(Collider other)
+    {
+        // When we hit an enemy
+        Enemy hittenEnemy = other.gameObject.GetComponent<Enemy>();
+        if (hittenEnemy)
+        {
+            Debug.Log("Laser: i hit the Enemy");
+            Destroy(hittenEnemy.gameObject);
+
+            // Now i can destroy myself
+            Destroy(this.gameObject);
+        }
     }
 }

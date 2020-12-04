@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+    // SpawnManager reference
+    SpawnManager _spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        // set the object in the zero position
-        transform.position = Vector3.zero;
+        // Get the sp manager from the scene
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame
@@ -78,6 +80,30 @@ public class Player : MonoBehaviour
             GameObject laser = GameObject.Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
 
         }
+    }
+
+    // Life of the player
+    int _lifes = 3;
+
+    // Apply damage to the player
+    public void Damage()
+    {
+        _lifes --;
+
+        // Game over
+        if(_lifes <= 0)
+        {
+            // Stop generating enemies
+            _spawnManager.StopSpawning();
+
+            Destroy(this.gameObject);
+        }
+    }
+
+    
+    void OnTriggerEnter(Collider other)
+    {
+
     }
 
 }
