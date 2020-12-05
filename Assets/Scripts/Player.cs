@@ -67,31 +67,54 @@ public class Player : MonoBehaviour
     // The next time you can shot
     float _nextFire = 0f;
 
+
+    [SerializeField]
+    GameObject _tripleShotPrefab;
+
+    // Is Triple Shot Active
+    [SerializeField]
+    bool _isTripleShotActive;
+
+
     // Handle laser shooting
     void HandleLaserShooting()
     {
         // Hit the space key, we spown the laser
-        if(Input.GetKey(KeyCode.Space) && Time.time > _nextFire)
+        if(Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
         {
             // Calculate the next available time to shot, relative to the fire rate
             _nextFire = Time.time + _fireRate;
 
-            // Spawn the laser in the current positon of the player
-            GameObject laser = GameObject.Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
+            if (_isTripleShotActive)
+            {
+                // Fire 3 lasers
+                GameObject tripleShot = Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+                
+            }
+            else
+            {
+                // Normal shot
+
+                // Spawn the laser in the current positon of the player
+                GameObject laser = Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
+            }
+
+            
 
         }
     }
 
     // Life of the player
-    int _lifes = 3;
+    [SerializeField]
+    int _lives = 3;
 
     // Apply damage to the player
     public void Damage()
     {
-        _lifes --;
+        _lives --;
 
         // Game over
-        if(_lifes <= 0)
+        if(_lives <= 0)
         {
             // Stop generating enemies
             _spawnManager.StopSpawning();
@@ -100,9 +123,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    
-    void OnTriggerEnter(Collider other)
+    // Enabled the triple shot
+    public void TripleShotActive()
     {
+        _isTripleShotActive = true;
+        StartCoroutine(DisableTripleShotCoroutine(5));
+    }
+
+    // Disable the triple shot after 5 seconds
+    IEnumerator DisableTripleShotCoroutine(float waitTime)
+    {
+        // Skip 1 frame
+        yield return null;
+
+        yield return new WaitForSeconds(waitTime);
+
+        _isTripleShotActive = false;
 
     }
 

@@ -4,32 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    int _damage;
-
+    
     // Start is called before the first frame update
     void Start()
     {
-        _damage = Random.Range(1, 5);
-        Color color = Color.black;
-        switch (_damage)
-        {
-            case 1:
-                color = Color.blue;
-                break;
-            case 2:
-                color = Color.green;
-                break;
-            case 3:
-                color = Color.yellow;
-                break;
-            case 4:
-                color = Color.magenta;
-                break;
-            case 5:
-                color = Color.red;
-                break;
-        }
-        this.GetComponent<MeshRenderer>().materials[0].color = color;
     }
 
     // Update is called once per frame
@@ -72,8 +50,7 @@ public class Enemy : MonoBehaviour
         transform.position = new Vector3(xPos, yPos, 0);
     }
 
-    // Unity Events called when two objects collides
-    // Object 1(Collider + RigidBody) + Object 2(Collider isTriggered=true)
+    // Unity Events called when two objects 3D collides: NOT USED NOW
     void OnTriggerEnter(Collider other)
     {
         // When we hit the player
@@ -90,5 +67,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // Unity Events called when two objects 2D collides
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // When we hit the player
+        Player playerHitten = other.gameObject.GetComponent<Player>();
+        if (playerHitten)
+        {
+            Debug.Log("Enemy: i hit the player");
+
+            // Damage the player
+            playerHitten.Damage();
+
+            // Destroy myself
+            Destroy(this.gameObject);
+        }
+    }
 
 }
