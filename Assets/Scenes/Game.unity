@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38f038dea07e4a2cbfb3a8af90363aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
+  _speed: 5
   _yBound: 6.7
   _xBound: 11.3
   _laserPrefab: {fileID: 9171611041598586840, guid: 0cdaf30d98bdf43e396069f975b9d5eb,
@@ -376,8 +376,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 2572684681589415235, guid: 8a86a4c4c12d443eea94802718a8834d,
     type: 3}
-  _powerUpPrefab: {fileID: 43519077084733197, guid: 7a1270ced57374c72bd954ea98f00c29,
-    type: 3}
+  _powerUpPrefabs:
+  - {fileID: 5137963759371852708, guid: a7b26bcb208fc4efcb283d015b117541, type: 3}
+  - {fileID: 43519077084733197, guid: 7a1270ced57374c72bd954ea98f00c29, type: 3}
   _yBound: 6.7
   _xBound: 10
 --- !u!4 &1302785505

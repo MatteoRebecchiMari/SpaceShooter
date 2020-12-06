@@ -9,9 +9,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     GameObject _enemyPrefab;
 
-    // Prefab for the enemy
     [SerializeField]
-    GameObject _powerUpPrefab;
+    GameObject[] _powerUpPrefabs;
 
     [SerializeField]
     float _yBound = 6.7f;
@@ -74,16 +73,20 @@ public class SpawnManager : MonoBehaviour
 
         while (true)
         {
-            // suspend execution for X seconds
-            float waitTimeSec = Random.Range(7f, 10f);
+            // suspend execution for X seconds i
+            float waitTimeSec = Random.Range(3f, 7f);
             yield return new WaitForSeconds(waitTimeSec);
 
             // Spawn the enemy
             // Random x Position
             float xPos = Random.Range(-_xBound, +_xBound);
 
-            // Generate the enemy in the random position
-            Instantiate(_powerUpPrefab, new Vector3(xPos, _yBound, 0), Quaternion.identity, this.transform);
+            // Random powerup generation from the prefabs array
+            int powerSelected = Random.Range(0, _powerUpPrefabs.Length);
+
+            // intantiate the powerup
+            Instantiate(_powerUpPrefabs[powerSelected], new Vector3(xPos, _yBound, 0), Quaternion.identity, this.transform);
+            
 
         }
     }

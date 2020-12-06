@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 
     // Speed velocity unit/second.
     [SerializeField]
-    float _speed = 10f;
+    float _speed = 5f;
 
     [SerializeField]
     float _yBound = 6.7f;
@@ -126,20 +126,46 @@ public class Player : MonoBehaviour
     // Enabled the triple shot
     public void TripleShotActive()
     {
-        _isTripleShotActive = true;
-        StartCoroutine(DisableTripleShotCoroutine(5));
+        StartCoroutine(TripleShotCoroutine(5));
     }
 
-    // Disable the triple shot after 5 seconds
-    IEnumerator DisableTripleShotCoroutine(float waitTime)
+    // Enabled super speed
+    public void IncreaseSpeed()
     {
+        StartCoroutine(SpeedIncreaseCoroutine(5));
+    }
+
+    // Coroutine to handle triple shot activation
+    IEnumerator TripleShotCoroutine(float waitTime)
+    {
+
+        // disable triple shot
+        _isTripleShotActive = true;
+
         // Skip 1 frame
         yield return null;
 
         yield return new WaitForSeconds(waitTime);
 
+        // disable triple shot
         _isTripleShotActive = false;
 
+    }
+
+    // Coroutine to handle super speed activation
+    IEnumerator SpeedIncreaseCoroutine(float waitTime)
+    {
+        
+        // Increase the speed
+        _speed = 10.0f;
+
+        yield return null;
+
+        yield return new WaitForSeconds(waitTime);
+
+        // Return to normal speed
+        _speed = 5.0f;
+      
     }
 
 }

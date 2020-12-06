@@ -2,10 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Enums to indentify powerups
+public enum PowerupType
+{
+    TripleShot,
+    Speed,
+    Shields,
+}
+
 public class PowerUp : MonoBehaviour
 {
-
-
+    // The type of powerup
+    [SerializeField]
+    private PowerupType _type;
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +56,23 @@ public class PowerUp : MonoBehaviour
         Player hittenPlayer = collision.gameObject.GetComponent<Player>();
         if (hittenPlayer)
         {
-            // Enable the triple shot for the player
-            hittenPlayer.TripleShotActive();
+      
+            switch (_type)
+            {
+                case PowerupType.TripleShot:
+                    // Enable the triple shot for the player
+                    hittenPlayer.TripleShotActive();
+                    break;
+                case PowerupType.Speed:
+                    // Enable superspeed for the player
+                    hittenPlayer.IncreaseSpeed();
+                    break;
+                case PowerupType.Shields:
+                    // Enable shield for the player
+
+                    break;
+            }
+
             // Destory myself
             Destroy(this.gameObject);
         }
