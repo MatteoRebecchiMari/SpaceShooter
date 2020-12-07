@@ -108,9 +108,24 @@ public class Player : MonoBehaviour
     [SerializeField]
     int _lives = 3;
 
+    [SerializeField]
+    GameObject _shiled2DVisualizer;
+
+    // Shield activation
+    [SerializeField]
+    bool _isShieldActive = false;
+
     // Apply damage to the player
     public void Damage()
     {
+        // Shield protect the life until the player is hitten
+        if (_isShieldActive)
+        {
+            _isShieldActive = false;
+            _shiled2DVisualizer.SetActive(false);
+            return;
+        }
+
         _lives --;
 
         // Game over
@@ -135,8 +150,17 @@ public class Player : MonoBehaviour
         StartCoroutine(SpeedIncreaseCoroutine(5));
     }
 
+    // Enabled shiled
+    public void ShieldActive()
+    {
+        // Enable the shield
+        _isShieldActive = true;
+        _shiled2DVisualizer.SetActive(true);
+        //StartCoroutine(ShieldCoroutine(5));
+    }
+
     // Coroutine to handle triple shot activation
-    IEnumerator TripleShotCoroutine(float waitTime)
+    IEnumerator TripleShotCoroutine(float activeTime)
     {
 
         // disable triple shot
@@ -145,7 +169,7 @@ public class Player : MonoBehaviour
         // Skip 1 frame
         yield return null;
 
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(activeTime);
 
         // disable triple shot
         _isTripleShotActive = false;
@@ -153,7 +177,7 @@ public class Player : MonoBehaviour
     }
 
     // Coroutine to handle super speed activation
-    IEnumerator SpeedIncreaseCoroutine(float waitTime)
+    IEnumerator SpeedIncreaseCoroutine(float activeTime)
     {
         
         // Increase the speed
@@ -161,11 +185,26 @@ public class Player : MonoBehaviour
 
         yield return null;
 
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(activeTime);
 
         // Return to normal speed
         _speed = 5.0f;
       
+    }
+
+    // Corotune for shield
+    IEnumerator ShieldCoroutine(float activeTime)
+    {
+        // Enable the shield
+        _isShieldActive = true;
+
+        // Skip 1 frame
+        yield return null;
+
+        yield return new WaitForSeconds(activeTime);
+
+        // Disable the shield
+        _isShieldActive = false;
     }
 
 }

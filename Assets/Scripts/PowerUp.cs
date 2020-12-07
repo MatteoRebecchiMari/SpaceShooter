@@ -34,8 +34,8 @@ public class PowerUp : MonoBehaviour
     [SerializeField]
     float _yBound = 6.7f;
 
-    [SerializeField]
-    float _xBound = 11.3f;
+    //[SerializeField]
+    //float _xBound = 11.3f;
 
     void HandleMovements()
     {
@@ -69,7 +69,7 @@ public class PowerUp : MonoBehaviour
                     break;
                 case PowerupType.Shields:
                     // Enable shield for the player
-
+                    hittenPlayer.ShieldActive();
                     break;
             }
 
