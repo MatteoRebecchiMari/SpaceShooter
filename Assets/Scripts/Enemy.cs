@@ -7,11 +7,37 @@ public class Enemy : MonoBehaviour
     // Player reference
     Player _player;
 
+    // Ref to the animator component
+    Animator _animator;
+
+    BoxCollider2D _collider;
+
     // Start is called before the first frame update
     void Start()
     {
         // Player reference in the scene
         _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.LogError("Enemy: No Player Found");
+        }
+
+        // Ref to the animator component (for the explosion)
+        _animator = gameObject.GetComponent<Animator>();
+
+        if(_animator == null)
+        {
+            Debug.LogError("Enemy: No Animator Found");
+        }
+
+        // Collider
+        _collider = gameObject.GetComponent<BoxCollider2D>();
+
+        if(_collider == null)
+        {
+            Debug.LogError("Enemy: No BoxCollider2D Found");
+        }
     }
 
     // Update is called once per frame
@@ -83,8 +109,17 @@ public class Enemy : MonoBehaviour
             // Damage the player
             playerHitten.Damage();
 
-            // Destroy myself
-            Destroy(this.gameObject);
+            _animator.SetTrigger("OnEnemyDeath");
+
+            // Disable the collider to prevent invalid collisions
+            // --> Now the enemy is dead
+            _collider.enabled = false;
+
+            // The object is dead we set the speed to 0;
+            _speed = 0;
+
+            // Destroy myself (after the animation ~3sec)
+            Destroy(this.gameObject, 2.8f);
         }
 
         // When we hit an enemy
@@ -96,14 +131,23 @@ public class Enemy : MonoBehaviour
             // Improve player score
             if (_player)
             {
-                _player.AddScore(10);
+                _player.AddScore(Random.Range(5,10));
             }
 
             // Destroy the laser
             Destroy(hittenLaser.gameObject);
 
-            // Now i can destroy myself
-            Destroy(this.gameObject);
+            _animator.SetTrigger("OnEnemyDeath");
+
+            // The object is dead we set the speed to 0;
+            _speed = 0;
+
+            // Disable the collider to prevent invalid collisions
+            // --> Now the enemy is dead
+            _collider.enabled = false;
+
+            // Now i can destroy myself (after the animation ~3sec)
+            Destroy(this.gameObject, 2.8f);
         }
 
     }
