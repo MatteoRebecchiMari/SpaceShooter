@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    
+    // Player reference
+    Player _player;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Player reference in the scene
+        _player = GameObject.Find("Player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -82,6 +86,26 @@ public class Enemy : MonoBehaviour
             // Destroy myself
             Destroy(this.gameObject);
         }
+
+        // When we hit an enemy
+        Laser hittenLaser = other.gameObject.GetComponent<Laser>();
+        if (hittenLaser)
+        {
+            Debug.Log("Enemy: i was hitten by a laser");
+
+            // Improve player score
+            if (_player)
+            {
+                _player.AddScore(10);
+            }
+
+            // Destroy the laser
+            Destroy(hittenLaser.gameObject);
+
+            // Now i can destroy myself
+            Destroy(this.gameObject);
+        }
+
     }
 
 }

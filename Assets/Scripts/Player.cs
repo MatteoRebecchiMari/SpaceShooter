@@ -7,11 +7,14 @@ public class Player : MonoBehaviour
     // SpawnManager reference
     SpawnManager _spawnManager;
 
+    UIManager _uiManager;
+
     // Start is called before the first frame update
     void Start()
     {
         // Get the sp manager from the scene
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -128,8 +131,14 @@ public class Player : MonoBehaviour
 
         _lives --;
 
+        // Update lives in the UI
+        if (_uiManager)
+        {
+            _uiManager.UpdateLives(_lives);
+        }
+
         // Game over
-        if(_lives <= 0)
+        if (_lives <= 0)
         {
             // Stop generating enemies
             _spawnManager.StopSpawning();
@@ -205,6 +214,22 @@ public class Player : MonoBehaviour
 
         // Disable the shield
         _isShieldActive = false;
+    }
+
+    // Score of the player
+    [SerializeField]
+    int _score = 0;
+
+    // Add score to the player
+    public void AddScore(int score)
+    {
+        _score += score;
+
+        // Update the UI score using the ui manager
+        if (_uiManager)
+        {
+            _uiManager.UpdateScore(_score);
+        }
     }
 
 }

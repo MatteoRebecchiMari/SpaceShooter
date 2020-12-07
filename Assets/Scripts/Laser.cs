@@ -57,14 +57,13 @@ public class Laser : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // When we hit an enemy
-        Enemy hittenEnemy = other.gameObject.GetComponent<Enemy>();
-        if (hittenEnemy)
-        {
-            Debug.Log("Laser: i hit the Enemy");
-            Destroy(hittenEnemy.gameObject);
-
-            // Now i can destroy myself
-            Destroy(this.gameObject);
-        }
+        //Enemy hittenEnemy = other.gameObject.GetComponent<Enemy>();
+        //if (hittenEnemy)
+        //{
+        //    Debug.Log("Laser: i hit the Enemy");
+        //
+        //    // Now i can destroy myself
+        //    Destroy(this.gameObject);
+        //}
     }
 }
