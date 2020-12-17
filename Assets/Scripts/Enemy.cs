@@ -84,17 +84,17 @@ public class Enemy : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         // When we hit the player
-        Player playerHitten = other.gameObject.GetComponent<Player>();
-        if (playerHitten)
-        {
-            Debug.Log("Enemy: i hit the player");
-
-            // Damage the player
-            playerHitten.Damage();
-
-            // Destroy myself
-            Destroy(this.gameObject);
-        }
+        //Player playerHitten = other.gameObject.GetComponent<Player>();
+        //if (playerHitten)
+        //{
+        //    Debug.Log("Enemy: i hit the player");
+        //
+        //    // Damage the player
+        //    playerHitten.Damage();
+        //
+        //    // Destroy myself
+        //    Destroy(this.gameObject);
+        //}
     }
 
     // Unity Events called when two objects 2D collides
