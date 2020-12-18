@@ -118,6 +118,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool _isShieldActive = false;
 
+    [SerializeField]
+    GameObject _rightEngine, _leftEngine;
+
     // Apply damage to the player
     public void Damage()
     {
@@ -130,6 +133,16 @@ public class Player : MonoBehaviour
         }
 
         _lives --;
+
+        switch (_lives)
+        {
+            case 2:
+                _rightEngine.SetActive(true);
+                break;
+            case 1:
+                _leftEngine.SetActive(true);
+                break;
+        }
 
         // Update lives in the UI
         if (_uiManager)

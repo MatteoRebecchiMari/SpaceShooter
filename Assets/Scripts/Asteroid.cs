@@ -15,6 +15,8 @@ public class Asteroid : MonoBehaviour
 
     private Collider2D _collider2D;
 
+    private SpawnManager _spawnManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class Asteroid : MonoBehaviour
         {
             Debug.LogError("Asteriod: Collider 2D not found");
         }
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame
@@ -44,18 +47,20 @@ public class Asteroid : MonoBehaviour
             // Disable the collider
             _collider2D.enabled = false;
 
-            // Instantiate the explosion
-            GameObject explosion = Instantiate(_explosionPrefab);
-            explosion.transform.position = transform.position;
+            // Instantiate the explosion in the asteroid position
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 
             // Stop to rotate
             _speedRotation = 0;
 
-            // Destory the explosion after 3 secs
-            Destroy(explosion, 2.5f);
+            // Destoy the laser
+            Destroy(hittenLaser.gameObject);
+
+            // START SPAWNING ENEMIES
+            _spawnManager.StartSpawning();
 
             // Now i can destroy myself
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 0.2f);
 
             
         }

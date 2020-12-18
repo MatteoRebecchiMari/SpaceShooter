@@ -21,19 +21,12 @@ public class SpawnManager : MonoBehaviour
     Coroutine _spawnEnemies;
     Coroutine _spawnPowerup;
 
-    // Start is called before the first frame update
-    void Start()
+    // Start spawning enemies
+    public void StartSpawning()
     {
         _spawnEnemies = StartCoroutine(SpawnEnemiesRoutine());
         _spawnPowerup = StartCoroutine(SpawnPowerUpRoutine());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     // When the object is destroyed we ensure to stop coroutines
     void OnDestroy()
@@ -94,8 +87,15 @@ public class SpawnManager : MonoBehaviour
 
     public void StopSpawning()
     {
-        StopCoroutine(_spawnEnemies);
-        StopCoroutine(_spawnPowerup);
+        if(_spawnEnemies != null)
+        {
+            StopCoroutine(_spawnEnemies);
+        }
+
+        if(_spawnPowerup != null)
+        {
+            StopCoroutine(_spawnPowerup);
+        }  
     }
 
 }
