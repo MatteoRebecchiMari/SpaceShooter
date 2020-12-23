@@ -12,6 +12,12 @@ public class Enemy : MonoBehaviour
 
     BoxCollider2D _collider;
 
+
+    // Explosion audio source
+    [SerializeField]
+    AudioClip _explosionAudioClip;
+    AudioSource _explosionAudioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +44,26 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Enemy: No BoxCollider2D Found");
         }
+
+
+        // EXPLSION SOUND
+        // Load the audio source
+        _explosionAudioSource = GetComponent<AudioSource>();
+        if (_explosionAudioSource == null)
+        {
+            Debug.LogError("AudioSource NOT FOUND!");
+        }
+
+        // Set the audio laser clip
+        if (_explosionAudioClip == null)
+        {
+            Debug.LogError("No explosion clip to play");
+        }
+        else
+        {
+            _explosionAudioSource.clip = _explosionAudioClip;
+        }
+
     }
 
     // Update is called once per frame
@@ -109,7 +135,14 @@ public class Enemy : MonoBehaviour
             // Damage the player
             playerHitten.Damage();
 
+
+            // ANIMATE EXPLOSION
             _animator.SetTrigger("OnEnemyDeath");
+
+
+            // PLAY THE EXPLOSION SOUND
+            _explosionAudioSource.Play();
+
 
             // Disable the collider to prevent invalid collisions
             // --> Now the enemy is dead
@@ -137,7 +170,13 @@ public class Enemy : MonoBehaviour
             // Destroy the laser
             Destroy(hittenLaser.gameObject);
 
+            // ANIMATION
             _animator.SetTrigger("OnEnemyDeath");
+
+
+            // PLAY THE EXPLOSION SOUND
+            _explosionAudioSource.Play();
+
 
             // The object is dead we set the speed to 0;
             _speed = 0;

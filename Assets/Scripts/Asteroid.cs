@@ -17,9 +17,11 @@ public class Asteroid : MonoBehaviour
 
     private SpawnManager _spawnManager;
 
+
     // Start is called before the first frame update
     void Start()
     {
+
         _direction = Random.Range(0, 2) == 0 ? 1 : - 1;
         _collider2D = GetComponent<Collider2D>();
         if(_collider2D == null)
@@ -27,6 +29,7 @@ public class Asteroid : MonoBehaviour
             Debug.LogError("Asteriod: Collider 2D not found");
         }
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
     }
 
     // Update is called once per frame

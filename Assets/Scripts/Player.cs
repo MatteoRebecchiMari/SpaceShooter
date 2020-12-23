@@ -14,7 +14,25 @@ public class Player : MonoBehaviour
     {
         // Get the sp manager from the scene
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Player: SpawnManager NOT FOUND!");
+        }
+
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_uiManager == null)
+        {
+            Debug.LogError("Player: UIManager NOT FOUND!");
+        }
+
+        // Load the audio source
+        _audioSource = GetComponent<AudioSource>();
+        if(_audioSource == null)
+        {
+            Debug.LogError("Player: AudioSource NOT FOUND!");
+        }
+
+        
     }
 
     // Update is called once per frame
@@ -78,6 +96,15 @@ public class Player : MonoBehaviour
     [SerializeField]
     bool _isTripleShotActive;
 
+    // Laser audio source
+    [SerializeField]
+    AudioClip _laserAudioClip;
+
+    [SerializeField]
+    AudioClip _powerUpAudioClip;
+
+    // Audio source that pplay a sound
+    AudioSource _audioSource;
 
     // Handle laser shooting
     void HandleLaserShooting()
@@ -102,8 +129,32 @@ public class Player : MonoBehaviour
                 GameObject laser = Instantiate(_laserPrefab, transform.position + _laserSpawnOffset, Quaternion.identity);
             }
 
-            
 
+            // Play LASER Sound
+            // Set the audio laser clip
+            if (_laserAudioClip == null)
+            {
+                Debug.LogError("No laser clip to play");
+            }
+            else
+            {
+                _audioSource.PlayOneShot(_laserAudioClip);
+            }
+
+        }
+    }
+
+    void PlayPowerUpSound()
+    {
+        // Play PowerUp Sound
+        // Set the audio laser clip
+        if (_powerUpAudioClip == null)
+        {
+            Debug.LogError("No powerup clip to play");
+        }
+        else
+        {
+            _audioSource.PlayOneShot(_powerUpAudioClip);
         }
     }
 
@@ -162,14 +213,16 @@ public class Player : MonoBehaviour
 
     // Enabled the triple shot
     public void TripleShotActive()
-    {
+    {       
         StartCoroutine(TripleShotCoroutine(5));
+        PlayPowerUpSound();
     }
 
     // Enabled super speed
     public void IncreaseSpeed()
     {
         StartCoroutine(SpeedIncreaseCoroutine(5));
+        PlayPowerUpSound();
     }
 
     // Enabled shiled
@@ -179,6 +232,7 @@ public class Player : MonoBehaviour
         _isShieldActive = true;
         _shiled2DVisualizer.SetActive(true);
         //StartCoroutine(ShieldCoroutine(5));
+        PlayPowerUpSound();
     }
 
     // Coroutine to handle triple shot activation
