@@ -685,7 +685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &422078184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -703,7 +703,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000015259, y: -161}
-  m_SizeDelta: {x: 450.8783, y: 46.240967}
+  m_SizeDelta: {x: 450.8783, y: 65.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &422078185
 MonoBehaviour:
@@ -737,7 +737,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press 'R' key to restart the level
+  m_Text: Press 'FIRE' to restart the level
 --- !u!222 &422078186
 CanvasRenderer:
   m_ObjectHideFlags: 0

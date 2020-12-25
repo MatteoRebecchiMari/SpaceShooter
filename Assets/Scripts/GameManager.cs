@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Handle restarting the level
-        if (_isGameOver && Input.GetKeyDown(KeyCode.R))
+        if (_isGameOver && ( Input.GetKeyDown(KeyCode.R) || CrossPlatformInputManager.GetButtonDown("Fire")))
         {
             // User pressed the R key
             // Restart the level  
