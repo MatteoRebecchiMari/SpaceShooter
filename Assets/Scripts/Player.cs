@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
 {
@@ -55,9 +56,12 @@ public class Player : MonoBehaviour
     // Calculate movements of the player
     void CalculateMovements()
     {
+
         // Get input using unity input manager (See Windows menu --> InputManager --> Axis)
-        float horizontalAxis = Input.GetAxis("Horizontal");
-        float verticalAxis = Input.GetAxis("Vertical");
+        // CROSS PLATFROM INPUT MANAGER
+        float horizontalAxis = CrossPlatformInputManager.GetAxis("Horizontal"); //Input.GetAxis("Horizontal");
+        float verticalAxis = CrossPlatformInputManager.GetAxis("Vertical"); //Input.GetAxis("Vertical");
+
 
         // Get the motion from the input and apply to the object
         Vector3 direction = new Vector3(horizontalAxis, verticalAxis, 0);
@@ -110,7 +114,9 @@ public class Player : MonoBehaviour
     void HandleLaserShooting()
     {
         // Hit the space key, we spown the laser
-        if(Input.GetKeyDown(KeyCode.Space) && Time.time > _nextFire)
+        // For CrossPlatformInputManager.GetButtonDown("Fire") --> See ButtonHandler component Name=Fire
+
+        if ((Input.GetKeyDown(KeyCode.Space) || CrossPlatformInputManager.GetButtonDown("Fire")) && Time.time > _nextFire)
         {
             // Calculate the next available time to shot, relative to the fire rate
             _nextFire = Time.time + _fireRate;
